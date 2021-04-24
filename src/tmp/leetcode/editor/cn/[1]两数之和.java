@@ -42,11 +42,37 @@
 // 👍 10891 👎 0
 
 package tmp.leetcode.editor.cn;
+
+import java.util.HashMap;
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int differenceNum = target - nums[i];
+            if (!hashMap.containsKey(differenceNum)){
+                hashMap.put(nums[i], i);
+            }
+            else{
+                return new int[]{hashMap.get(differenceNum), i};
+            }
+        }
         return new int[0];
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
+/*
+* 解题思路：
+*     1、利用HashMap；
+*     2、遍历数组nums，differenceNum = target - nums[i]是我们需要查找的值；
+*        如果Map中不存在differenceNum，即将nums[i] 和索引i存入Map；若存在，
+*        则直接取出differenceNum的索引j，返回[j, i]。
+*     3、举例说明：
+*       [2,7,11,15] target：9
+*       循环第一次：
+*           7 = 9 - 2，7不在map中，存入（2，0）。
+*       循环第二次：
+*           2 = 9 - 7，此时发现2在map中，则直接取出2的索引0，并将本次循环数字7的索引1一并返回[0,1]。
+*       可发现，如此第二次循环便找到目标值，程序结束
+*      （注意：返回索引的数组中，第一个元素是已经存入Map中的数字对应的索引。因为按照循环先后的原则，这个数是先遍历存入数组的。）
+*/
